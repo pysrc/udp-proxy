@@ -11,7 +11,7 @@ fn proxy(local: &str, remote: &str) {
     let mut org: Option<SocketAddr> = None;
     loop {
         if let Ok((siz, addr)) = localcon.recv_from(&mut recv_buf) {
-            if addr.to_string() == remote {
+            if addr.to_string() == remote && org != None {
                 localcon.send_to(&recv_buf[..siz], org.unwrap()).unwrap();
             } else {
                 if org == None {
